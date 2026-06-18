@@ -2,14 +2,15 @@ const validator = require('@app-core/validator');
 const { ERROR_CODE } = require('@app-core/errors');
 const creatorCardRepository = require('@app/repository/creator-card');
 const Messages = require('@app/messages/creator-card');
-const serializeCreatorCard = require('./serialize');
+const serializeCreatorCard = require('../utils/serialize');
 const { deleteCreatorCardSpec } = require('./validation-spec');
-const throwCreatorCardError = require('./throw-creator-card-error');
+const ensureSlugFormat = require('../utils/ensure-slug-format');
+const throwCreatorCardError = require('../utils/throw-creator-card-error');
 
-const DELETE_BODY_FIELDS = new Set(['creator_reference']);
+const DELETE_FIELDS = new Set(Object.keys(deleteCreatorCardSpec.root.children));
 
-function ensureDeleteBodyFields(body) {
-  const unexpectedField = Object.keys(body).find((field) => !DELETE_BODY_FIELDS.has(field));
+function ensureDeleteFieldsMatchSpec(data) {
+  const unexpectedField = Object.keys(data).find((field) => !DELETE_FIELDS.has(field));
 
   if (unexpectedField) {
     throwCreatorCardError(`${unexpectedField} is not allowed!`, ERROR_CODE.VALIDATIONERR);
@@ -17,13 +18,14 @@ function ensureDeleteBodyFields(body) {
 }
 
 async function deleteCreatorCard(serviceData) {
-  const { slug, ...body } = serviceData;
-  ensureDeleteBodyFields(body);
+  ensureDeleteFieldsMatchSpec(serviceData);
 
-  const data = validator.validate(body, deleteCreatorCardSpec);
+  const data = validator.validate(serviceData, deleteCreatorCardSpec);
+  ensureSlugFormat(data.slug);
+
   const card = await creatorCardRepository.findOne({
     query: {
-      slug,
+      slug: data.slug,
       creator_reference: data.creator_reference,
       deleted: null,
     },
@@ -36,9 +38,9 @@ async function deleteCreatorCard(serviceData) {
   const deleted = Date.now();
   const updated = deleted;
 
-  await creatorCardRepository.updateOne({
+  const updateResult = await creatorCardRepository.updateOne({
     query: {
-      slug,
+      slug: data.slug,
       creator_reference: data.creator_reference,
       deleted: null,
     },
@@ -48,12 +50,16 @@ async function deleteCreatorCard(serviceData) {
     },
   });
 
+  if (updateResult.modifiedCount === 0) {
+    throwCreatorCardError(Messages.NOT_FOUND, 'NF01');
+  }
+
   const deletedCard =
     typeof card.toObject === 'function'
       ? card.toObject({ flattenMaps: true, versionKey: false })
       : card;
 
-  return serializeCreatorCard({ ...deletedCard, deleted, updated }, { includeAccessCode: true });
+  return serializeCreatorCard({ ...deletedCard, deleted, updated }, { includeAccessCode: false });
 }
 
 module.exports = deleteCreatorCard;

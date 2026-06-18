@@ -23,10 +23,17 @@ const creatorCardSpec = `root {
 }`;
 
 const deleteCreatorCardSpec = `root {
+  slug string<trim|lengthBetween:5,50>
   creator_reference string<trim|length:20>
+}`;
+
+const retrieveCreatorCardSpec = `root {
+  slug string<trim|lengthBetween:5,50>
+  access_code? string<trim>
 }`;
 
 module.exports = {
   creatorCardSpec: validator.parse(creatorCardSpec),
   deleteCreatorCardSpec: validator.parse(deleteCreatorCardSpec),
+  retrieveCreatorCardSpec: validator.parse(retrieveCreatorCardSpec),
 };

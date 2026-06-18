@@ -1,11 +1,18 @@
+const validator = require('@app-core/validator');
+const { hash } = require('@app-core/security');
 const Messages = require('@app/messages/creator-card');
-const serializeCreatorCard = require('./serialize');
-const findActiveBySlug = require('./find-active-by-slug');
-const throwCreatorCardError = require('./throw-creator-card-error');
+const serializeCreatorCard = require('../utils/serialize');
+const findActiveCardBySlug = require('../utils/find-active-card-by-slug');
+const { retrieveCreatorCardSpec } = require('./validation-spec');
+const ensureSlugFormat = require('../utils/ensure-slug-format');
+const throwCreatorCardError = require('../utils/throw-creator-card-error');
 
 async function retrieveCreatorCard(serviceData) {
-  const { slug, access_code: accessCode } = serviceData;
-  const card = await findActiveBySlug(slug);
+  const data = validator.validate(serviceData, retrieveCreatorCardSpec);
+  const { slug, access_code: accessCode } = data;
+  ensureSlugFormat(slug);
+
+  const card = await findActiveCardBySlug(slug);
 
   if (!card) {
     throwCreatorCardError(Messages.NOT_FOUND, 'NF01');
@@ -19,7 +26,7 @@ async function retrieveCreatorCard(serviceData) {
     throwCreatorCardError(Messages.PRIVATE_ACCESS_CODE_MISSING, 'AC03');
   }
 
-  if (card.access_type === 'private' && card.access_code !== accessCode) {
+  if (card.access_type === 'private' && !(await hash.validateBHash(accessCode, card.access_code))) {
     throwCreatorCardError(Messages.PRIVATE_ACCESS_CODE_INVALID, 'AC04');
   }
 
