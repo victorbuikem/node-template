@@ -1,4 +1,4 @@
-const { throwAppError } = require('@app-core/errors');
+const { throwAppError, ERROR_CODE } = require('@app-core/errors');
 const objectValidator = require('./validator');
 
 function validateParsedSpec(data, parsedSpec, options = {}) {
@@ -18,7 +18,7 @@ function validateParsedSpec(data, parsedSpec, options = {}) {
     // console.log(result);
   } catch (e) {
     // console.log(errors);
-    throwAppError(e.message, 'SPCL_VALIDATION', { details: errors });
+    throwAppError(e.message, ERROR_CODE.VALIDATIONERR, { details: errors });
   }
 
   // eslint-disable-next-line camelcase
@@ -34,7 +34,7 @@ function validateParsedSpec(data, parsedSpec, options = {}) {
     });
     // eslint-disable-next-line camelcase
     const errorMessageToThrow = process?.env?.TOP_LEVEL_ERROR_MESSAGE || __$app_first_message;
-    throwAppError(errorMessageToThrow, 'SPCL_VALIDATION', { details: errorsArray });
+    throwAppError(errorMessageToThrow, ERROR_CODE.VALIDATIONERR, { details: errorsArray });
   }
   return result;
 }
