@@ -1,0 +1,46 @@
+services/creator-cards/ensure-access-code-format.js
+  s_3e0ee9203968c3::t_585a2a6f51e742 1-13
+services/creator-cards/ensure-urls.js
+  s_3e0ee9203968c3::t_585a2a6f51e742 1-15
+services/utils/slugify-title.js
+  s_3e0ee9203968c3::t_585a2a6f51e742 1-9
+services/creator-cards/ensure-slug-format.js
+  s_3e0ee9203968c3::t_585a2a6f51e742 1-13
+services/creator-cards/retrieve.js
+  s_3e0ee9203968c3::t_585a2a6f51e742 3-4
+services/creator-cards/create.js
+  s_3e0ee9203968c3::t_585a2a6f51e742 7-13
+services/creator-cards/find-active-by-slug.js
+  s_3e0ee9203968c3::t_585a2a6f51e742 1-12
+services/creator-cards/ensure-provided-slug-is-available.js
+  s_3e0ee9203968c3::t_585a2a6f51e742 1-14
+services/creator-cards/delete.js
+  s_3e0ee9203968c3::t_585a2a6f51e742 7
+services/creator-cards/create-available-slug.js
+  s_3e0ee9203968c3::t_585a2a6f51e742 2-3,30
+services/creator-cards/ensure-rates.js
+  s_3e0ee9203968c3::t_585a2a6f51e742 1-15
+services/creator-cards/throw-creator-card-error.js
+  s_3e0ee9203968c3::t_585a2a6f51e742 1-7
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.8",
+  "base_commit_sha": "bc4ee900d23470c176ba5f36435678e8f0833b0b",
+  "prompts": {},
+  "humans": {
+    "h_d51bed11443bf8": {
+      "author": "Kalu Victor <victorbuikemdev@gmail.com>"
+    }
+  },
+  "sessions": {
+    "s_3e0ee9203968c3": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019ed98d-d5c6-7772-aeab-e2c593c2d5d3",
+        "model": "gpt-5.5"
+      },
+      "human_author": "Kalu Victor <victorbuikemdev@gmail.com>"
+    }
+  }
+}
