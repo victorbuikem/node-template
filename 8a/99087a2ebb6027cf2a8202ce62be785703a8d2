@@ -1,0 +1,55 @@
+test/creator-cards/service.test.js
+  s_b64290a018b875::t_ca86c2e0079e8d 202-215,218-223,335-340,485
+  s_02e91e66e31fa7::t_ea41db22774b04 426
+  s_02e91e66e31fa7::t_4e110f1531cf3c 498,520
+  s_02e91e66e31fa7::t_78290f5d76961c 201,216-217,291-295,301,334,486-490,499-511,521-524
+  s_652426e0fb10b5::t_6ed76b0f907d1b 251-253,376-389,448-466
+  s_a71c4c40dff50c::t_1e7806bf0e968a 8,390-391,467-470
+  s_02e91e66e31fa7::t_76383f7e1f062a 191,333,406-418,491-497,512-519
+  s_02e91e66e31fa7::t_173164c06e20bb 243
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.8",
+  "base_commit_sha": "8a99087a2ebb6027cf2a8202ce62be785703a8d2",
+  "prompts": {},
+  "humans": {
+    "h_d51bed11443bf8": {
+      "author": "Kalu Victor <victorbuikemdev@gmail.com>"
+    }
+  },
+  "sessions": {
+    "s_02e91e66e31fa7": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019eda93-47f6-7ed2-b414-736e54c48d92",
+        "model": "gpt-5.5"
+      },
+      "human_author": "Kalu Victor <victorbuikemdev@gmail.com>"
+    },
+    "s_652426e0fb10b5": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019ed9a4-4713-7c30-9949-b6334ccf921f",
+        "model": "gpt-5.5"
+      },
+      "human_author": "Kalu Victor <victorbuikemdev@gmail.com>"
+    },
+    "s_a71c4c40dff50c": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019eda1f-acf6-7011-976a-f4fc8e899ae3",
+        "model": "gpt-5.5"
+      },
+      "human_author": "Kalu Victor <victorbuikemdev@gmail.com>"
+    },
+    "s_b64290a018b875": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019ed9fc-8fb3-7a62-9ead-5ac73384224f",
+        "model": "gpt-5.5"
+      },
+      "human_author": "Kalu Victor <victorbuikemdev@gmail.com>"
+    }
+  }
+}
