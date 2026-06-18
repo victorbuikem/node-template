@@ -88,6 +88,7 @@ function createMockModels() {
         },
         modelStubs
       );
+      MockModels[modelName].__appConfig = model.__appConfig;
     });
   }
 
