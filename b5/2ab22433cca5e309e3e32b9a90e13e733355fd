@@ -1,0 +1,27 @@
+endpoints/creator-cards/delete.js
+  h_d51bed11443bf8 11
+  s_b64290a018b875::t_3be7c0cb3ee5fa 2,9-10,12
+endpoints/creator-cards/retrieve.js
+  s_b64290a018b875::t_bd0f53c94d6a0c 2,9-12
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.8",
+  "base_commit_sha": "b52ab22433cca5e309e3e32b9a90e13e733355fd",
+  "prompts": {},
+  "humans": {
+    "h_d51bed11443bf8": {
+      "author": "Kalu Victor <victorbuikemdev@gmail.com>"
+    }
+  },
+  "sessions": {
+    "s_b64290a018b875": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019ed9fc-8fb3-7a62-9ead-5ac73384224f",
+        "model": "gpt-5.5"
+      },
+      "human_author": "Kalu Victor <victorbuikemdev@gmail.com>"
+    }
+  }
+}
