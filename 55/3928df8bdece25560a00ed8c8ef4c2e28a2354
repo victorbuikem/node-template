@@ -1,0 +1,24 @@
+middlewares/index.js
+  s_b64290a018b875::t_454f7f81120377 2-3,7-8
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.8",
+  "base_commit_sha": "553928df8bdece25560a00ed8c8ef4c2e28a2354",
+  "prompts": {},
+  "humans": {
+    "h_d51bed11443bf8": {
+      "author": "Kalu Victor <victorbuikemdev@gmail.com>"
+    }
+  },
+  "sessions": {
+    "s_b64290a018b875": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019ed9fc-8fb3-7a62-9ead-5ac73384224f",
+        "model": "gpt-5.5"
+      },
+      "human_author": "Kalu Victor <victorbuikemdev@gmail.com>"
+    }
+  }
+}
