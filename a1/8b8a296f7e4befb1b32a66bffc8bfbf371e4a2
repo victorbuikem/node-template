@@ -1,0 +1,24 @@
+core/validator-vsl/validator.js
+  s_b83da0c6a9ee69::t_46da8fdded945a 27-28
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.8",
+  "base_commit_sha": "a18b8a296f7e4befb1b32a66bffc8bfbf371e4a2",
+  "prompts": {},
+  "humans": {
+    "h_d51bed11443bf8": {
+      "author": "Kalu Victor <victorbuikemdev@gmail.com>"
+    }
+  },
+  "sessions": {
+    "s_b83da0c6a9ee69": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019ed96a-adca-7680-bf87-74d683333eb2",
+        "model": "gpt-5.5"
+      },
+      "human_author": "Kalu Victor <victorbuikemdev@gmail.com>"
+    }
+  }
+}
