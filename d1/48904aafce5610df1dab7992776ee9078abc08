@@ -1,0 +1,24 @@
+core/errors/constants.js
+  s_2d56bbec4c97b5::t_0a050e8e2e3835 38-44
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.8",
+  "base_commit_sha": "d148904aafce5610df1dab7992776ee9078abc08",
+  "prompts": {},
+  "humans": {
+    "h_d51bed11443bf8": {
+      "author": "Kalu Victor <victorbuikemdev@gmail.com>"
+    }
+  },
+  "sessions": {
+    "s_2d56bbec4c97b5": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019ed19d-d9d8-7c92-8717-41cc4ae58382",
+        "model": "gpt-5.5"
+      },
+      "human_author": "Kalu Victor <victorbuikemdev@gmail.com>"
+    }
+  }
+}
