@@ -1,0 +1,12 @@
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.8",
+  "base_commit_sha": "9afbab3c62c273af111ec2b8bada09cd5b282441",
+  "prompts": {},
+  "humans": {
+    "h_d51bed11443bf8": {
+      "author": "Kalu Victor <victorbuikemdev@gmail.com>"
+    }
+  }
+}
