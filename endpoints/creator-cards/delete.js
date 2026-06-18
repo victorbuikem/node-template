@@ -8,7 +8,7 @@ module.exports = createHandler({
   method: 'delete',
   middlewares: [rateLimit, validateCreatorCardSlug],
   props: {
-    rateLimit: { max: 10, window: '1m' },
+    rateLimit: { max: 5, window: '1m' },
   },
   async handler(rc, helpers) {
     const response = await deleteCreatorCard({
