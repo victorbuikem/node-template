@@ -56,7 +56,7 @@ async function deleteCreatorCard(serviceData) {
     typeof card.toObject === 'function'
       ? card.toObject({ flattenMaps: true, versionKey: false })
       : card;
-  const updated = updateValues.updated || updateValues.deleted;
+  const updated = updateValues.deleted;
 
   return serializeCreatorCard(
     { ...deletedCard, deleted: updateValues.deleted, updated },
