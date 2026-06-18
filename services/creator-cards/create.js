@@ -1,16 +1,17 @@
 const validator = require('@app-core/validator');
 const { ERROR_CODE } = require('@app-core/errors');
+const { hash } = require('@app-core/security');
 const creatorCardRepository = require('@app/repository/creator-card');
 const Messages = require('@app/messages/creator-card');
-const serializeCreatorCard = require('./serialize');
+const ensureSlugFormat = require('@app/services/utils/ensure-slug-format');
+const ensureAccessCodeFormat = require('@app/services/utils/ensure-access-code-format');
+const serializeCreatorCard = require('../utils/serialize');
 const { creatorCardSpec } = require('./validation-spec');
-const ensureSlugFormat = require('./ensure-slug-format');
-const ensureAccessCodeFormat = require('./ensure-access-code-format');
-const ensureUrls = require('./ensure-urls');
-const ensureRates = require('./ensure-rates');
-const ensureProvidedSlugIsAvailable = require('./ensure-provided-slug-is-available');
-const createAvailableSlug = require('./create-available-slug');
-const throwCreatorCardError = require('./throw-creator-card-error');
+const ensureUrls = require('../utils/ensure-urls');
+
+const createAvailableSlug = require('../utils/create-available-slug');
+const findActiveCardBySlug = require('../utils/find-active-card-by-slug');
+const throwCreatorCardError = require('../utils/throw-creator-card-error');
 
 async function createCreatorCard(serviceData) {
   const data = validator.validate(serviceData, creatorCardSpec);
@@ -19,7 +20,12 @@ async function createCreatorCard(serviceData) {
   ensureSlugFormat(data.slug);
   ensureAccessCodeFormat(data.access_code);
   ensureUrls(data.links);
-  ensureRates(data.service_rates);
+
+  const rates = data.service_rates?.rates || [];
+
+  if (data.service_rates && !rates.length) {
+    throwCreatorCardError(Messages.RATES_REQUIRED, ERROR_CODE.VALIDATIONERR);
+  }
 
   if (accessType === 'private' && !data.access_code) {
     throwCreatorCardError(Messages.PRIVATE_ACCESS_CODE_REQUIRED, 'AC01');
@@ -29,14 +35,21 @@ async function createCreatorCard(serviceData) {
     throwCreatorCardError(Messages.PUBLIC_ACCESS_CODE_NOT_ALLOWED, 'AC05');
   }
 
-  await ensureProvidedSlugIsAvailable(data.slug);
+  if (data.slug) {
+    const existing = await findActiveCardBySlug(data.slug);
+    if (existing) {
+      throwCreatorCardError(Messages.SLUG_TAKEN, 'SL02');
+    }
+  }
 
   let card;
+  const accessCodeHash = data.access_code ? await hash.createBHash(data.access_code) : null;
 
   try {
     card = await creatorCardRepository.create({
       ...data,
       access_type: accessType,
+      access_code: accessCodeHash,
       slug: data.slug || (await createAvailableSlug(data.title)),
       deleted: null,
     });
@@ -48,7 +61,7 @@ async function createCreatorCard(serviceData) {
     throw error;
   }
 
-  return serializeCreatorCard(card, { includeAccessCode: true });
+  return serializeCreatorCard(card, { includeAccessCode: false });
 }
 
 module.exports = createCreatorCard;

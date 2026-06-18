@@ -1,12 +1,12 @@
 const { createHandler } = require('@app-core/server');
-const { rateLimit, validateCreatorCardSlug } = require('@app/middlewares');
+const { rateLimit } = require('@app/middlewares');
 const deleteCreatorCard = require('@app/services/creator-cards/delete');
 const Messages = require('@app/messages/creator-card');
 
 module.exports = createHandler({
   path: '/creator-cards/:slug',
   method: 'delete',
-  middlewares: [rateLimit, validateCreatorCardSlug],
+  middlewares: [rateLimit],
   props: {
     rateLimit: { max: 5, window: '1m' },
   },
