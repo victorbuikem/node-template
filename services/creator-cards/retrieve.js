@@ -1,6 +1,7 @@
 const Messages = require('@app/messages/creator-card');
 const serializeCreatorCard = require('./serialize');
-const { findActiveBySlug, throwCreatorCardError } = require('./helpers');
+const findActiveBySlug = require('./find-active-by-slug');
+const throwCreatorCardError = require('./throw-creator-card-error');
 
 async function retrieveCreatorCard(serviceData) {
   const { slug, access_code: accessCode } = serviceData;

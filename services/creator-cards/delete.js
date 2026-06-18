@@ -4,7 +4,7 @@ const creatorCardRepository = require('@app/repository/creator-card');
 const Messages = require('@app/messages/creator-card');
 const serializeCreatorCard = require('./serialize');
 const { deleteCreatorCardSpec } = require('./validation-spec');
-const { throwCreatorCardError } = require('./helpers');
+const throwCreatorCardError = require('./throw-creator-card-error');
 
 const DELETE_BODY_FIELDS = new Set(['creator_reference']);
 

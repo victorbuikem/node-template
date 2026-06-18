@@ -4,15 +4,13 @@ const creatorCardRepository = require('@app/repository/creator-card');
 const Messages = require('@app/messages/creator-card');
 const serializeCreatorCard = require('./serialize');
 const { creatorCardSpec } = require('./validation-spec');
-const {
-  ensureSlugFormat,
-  ensureAccessCodeFormat,
-  ensureUrls,
-  ensureRates,
-  ensureProvidedSlugIsAvailable,
-  createAvailableSlug,
-  throwCreatorCardError,
-} = require('./helpers');
+const ensureSlugFormat = require('./ensure-slug-format');
+const ensureAccessCodeFormat = require('./ensure-access-code-format');
+const ensureUrls = require('./ensure-urls');
+const ensureRates = require('./ensure-rates');
+const ensureProvidedSlugIsAvailable = require('./ensure-provided-slug-is-available');
+const createAvailableSlug = require('./create-available-slug');
+const throwCreatorCardError = require('./throw-creator-card-error');
 
 async function createCreatorCard(serviceData) {
   const data = validator.validate(serviceData, creatorCardSpec);
