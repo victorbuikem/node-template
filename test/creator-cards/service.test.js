@@ -5,7 +5,7 @@ const { MockModelStubs } = require('@app/mock-models');
 const createCreatorCard = require('@app/services/creator-cards/create');
 const retrieveCreatorCard = require('@app/services/creator-cards/retrieve');
 const deleteCreatorCard = require('@app/services/creator-cards/delete');
-const serializeCreatorCard = require('@app/services/creator-cards/serialize');
+const serializeCreatorCard = require('@app/services/utils/serialize');
 const { CreatorCard } = require('@app/models');
 
 const cardStubs = MockModelStubs.CreatorCard;
@@ -188,9 +188,33 @@ describe('creator cards', () => {
       assert.strictEqual(response.creator_reference, 'CREATORREFERENCE0001');
       assert.strictEqual(response.status, 'published');
       assert.strictEqual(response.access_type, 'public');
+      assert.strictEqual(response.access_code, null);
       assert.ok(!Object.hasOwn(response, 'description'));
       assert.ok(!Object.hasOwn(response, 'links'));
       assert.ok(!Object.hasOwn(response, 'service_rates'));
+    } finally {
+      revertFind();
+      revertCreate();
+    }
+  });
+
+  it('returns access_code on create while storing it for private retrieval', async () => {
+    const revertFind = stub('findOne', { mockNull: true });
+    let createdData;
+    const revertCreate = stub('create', {
+      overrideFn(data) {
+        createdData = data;
+        return { _id: 'created-card', ...data };
+      },
+    });
+
+    try {
+      const response = await createCreatorCard(
+        basePayload({ access_type: 'private', access_code: 'ABC123' })
+      );
+
+      assert.strictEqual(createdData.access_code, 'ABC123');
+      assert.strictEqual(response.access_code, 'ABC123');
     } finally {
       revertFind();
       revertCreate();
@@ -216,12 +240,16 @@ describe('creator cards', () => {
         message: 'invalid slug format',
       },
       {
-        payload: { access_code: 'abc' },
+        payload: { access_type: 'private', access_code: 'abc' },
         message: 'invalid access_code format',
       },
       {
         payload: { links: [{ title: 'Website', url: 'ftp://example.com' }] },
         message: 'invalid link URL scheme',
+      },
+      {
+        payload: { links: [{ title: 'Website', url: 'https://' }] },
+        message: 'invalid link URL',
       },
       {
         payload: { service_rates: { currency: 'USD', rates: [] } },
@@ -260,11 +288,17 @@ describe('creator cards', () => {
       () => createCreatorCard(basePayload({ access_code: 'ABC123' })),
       (error) => error.errorCode === 'AC05'
     );
+
+    await assertRejects(
+      () => createCreatorCard(basePayload({ access_code: 'abc' })),
+      (error) => error.errorCode === 'AC05'
+    );
   });
 
   it('does not expose access_code when retrieving a card', async () => {
     const revertFind = stub('findOne', {
       docConfig: card({
+        access_code: 'ABC123',
         links: [{ _id: 'link-01', title: 'Website', url: 'https://example.com' }],
         service_rates: {
           currency: 'USD',
@@ -291,6 +325,19 @@ describe('creator cards', () => {
       assert.ok(!Object.hasOwn(response, '_id'));
       assert.ok(!Object.hasOwn(response.links[0], '_id'));
       assert.ok(!Object.hasOwn(response.service_rates.rates[0], '_id'));
+    } finally {
+      revertFind();
+    }
+  });
+
+  it('rejects invalid private access_code when retrieving a card', async () => {
+    const revertFind = stub('findOne', { docConfig: card({ access_code: 'ABC123' }) });
+
+    try {
+      await assertRejects(
+        () => retrieveCreatorCard({ slug: 'portfolio-builder', access_code: 'WRONG1' }),
+        (error) => error.errorCode === 'AC04'
+      );
     } finally {
       revertFind();
     }
@@ -326,6 +373,22 @@ describe('creator cards', () => {
     }
   });
 
+  it('validates slugs before retrieving or deleting cards', async () => {
+    await assertRejects(
+      () => retrieveCreatorCard({ slug: 'bad slug' }),
+      (error) => error.errorCode === ERROR_CODE.VALIDATIONERR
+    );
+
+    await assertRejects(
+      () =>
+        deleteCreatorCard({
+          slug: 'bad slug',
+          creator_reference: 'CREATORREFERENCE0001',
+        }),
+      (error) => error.errorCode === ERROR_CODE.VALIDATIONERR
+    );
+  });
+
   it('rejects extra fields in delete payloads', async () => {
     await assertRejects(
       () =>
@@ -340,6 +403,19 @@ describe('creator cards', () => {
     );
   });
 
+  it('does not allow reusing a deleted card slug', async () => {
+    const revertFind = stub('findOne', { docConfig: card({ deleted: Date.now() }) });
+
+    try {
+      await assertRejects(
+        () => createCreatorCard(basePayload({ slug: 'portfolio-builder' })),
+        (error) => error.errorCode === 'SL02'
+      );
+    } finally {
+      revertFind();
+    }
+  });
+
   it('soft deletes a card and returns access_code on delete', async () => {
     const revertFind = stub('findOne', { docConfig: card() });
     let updateValues;
@@ -347,6 +423,7 @@ describe('creator cards', () => {
     const revertUpdateCapture = stub('updateOne', {
       overrideFn(data, existingFn) {
         updateValues = data.updateValues;
+        Object.assign(updateValues, { updated: Date.now() });
         return existingFn(data);
       },
     });
@@ -360,11 +437,33 @@ describe('creator cards', () => {
       assert.strictEqual(response.id, 'card-01');
       assert.strictEqual(response.access_code, 'ABC123');
       assert.strictEqual(typeof response.deleted, 'number');
-      assert.strictEqual(response.updated, response.deleted);
       assert.strictEqual(updateValues.updated, response.updated);
     } finally {
       revertFind();
       revertUpdateCapture();
+      revertUpdate();
+    }
+  });
+
+  it('returns not found when a delete update no longer matches a card', async () => {
+    const revertFind = stub('findOne', { docConfig: card() });
+    const revertUpdate = stub('updateOne', {
+      overrideFn() {
+        return { acknowledged: true, modifiedCount: 0 };
+      },
+    });
+
+    try {
+      await assertRejects(
+        () =>
+          deleteCreatorCard({
+            slug: 'portfolio-builder',
+            creator_reference: 'CREATORREFERENCE0001',
+          }),
+        (error) => error.errorCode === 'NF01'
+      );
+    } finally {
+      revertFind();
       revertUpdate();
     }
   });
@@ -379,6 +478,49 @@ describe('creator cards', () => {
       assert.strictEqual(response.statusCode, 403);
       assert.strictEqual(response.data.status, 'error');
       assert.strictEqual(response.data.code, 'AC03');
+    } finally {
+      revertFind();
+    }
+  });
+
+  it('does not rate limit creator card retrieval requests', async () => {
+    const revertFind = stub('findOne', { docConfig: card() });
+    const server = createMockServer(['endpoints/creator-cards/retrieve.js']);
+
+    try {
+      const responses = await Promise.all(
+        Array.from({ length: 11 }, () =>
+          server.get('/creator-cards/portfolio-builder', {
+            IP: '203.0.113.10',
+          })
+        )
+      );
+      const response = responses[responses.length - 1];
+
+      assert.strictEqual(response.statusCode, 403);
+      assert.strictEqual(response.data.code, 'AC03');
+    } finally {
+      revertFind();
+    }
+  });
+
+  it('does not rate limit creator card delete requests', async () => {
+    const revertFind = stub('findOne', { mockNull: true });
+    const server = createMockServer(['endpoints/creator-cards/delete.js']);
+
+    try {
+      const responses = await Promise.all(
+        Array.from({ length: 6 }, () =>
+          server.delete('/creator-cards/portfolio-builder', {
+            IP: '203.0.113.20',
+            body: { creator_reference: 'CREATORREFERENCE0001' },
+          })
+        )
+      );
+      const response = responses[responses.length - 1];
+
+      assert.strictEqual(response.statusCode, 404);
+      assert.strictEqual(response.data.code, 'NF01');
     } finally {
       revertFind();
     }
