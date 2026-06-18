@@ -1,0 +1,36 @@
+services/utils/ensure-urls.js
+  s_02e91e66e31fa7::t_8f30413b6c402a 1
+  s_02e91e66e31fa7::t_4eca837b82caaf 11
+models/creator-card.js
+  s_02e91e66e31fa7::t_52145aba1fcd66 36
+services/creator-cards/delete.js
+  s_02e91e66e31fa7::t_024a0e064027e1 38-40,48,59,62
+  s_02e91e66e31fa7::t_c076d996bb37d7 61,63-64
+services/creator-cards/create.js
+  s_02e91e66e31fa7::t_aa71de7c5c487f 13,37-38,40,65
+services/utils/find-card-by-slug.js
+  s_02e91e66e31fa7::t_59d0c8b525e87f 1-11
+services/utils/create-available-slug.js
+  s_02e91e66e31fa7::t_75fea3459d8e31 3,11,19
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.8",
+  "base_commit_sha": "e472c64ac647fc955f1d299a78e1ee146f353ce1",
+  "prompts": {},
+  "humans": {
+    "h_d51bed11443bf8": {
+      "author": "Kalu Victor <victorbuikemdev@gmail.com>"
+    }
+  },
+  "sessions": {
+    "s_02e91e66e31fa7": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019eda93-47f6-7ed2-b414-736e54c48d92",
+        "model": "gpt-5.5"
+      },
+      "human_author": "Kalu Victor <victorbuikemdev@gmail.com>"
+    }
+  }
+}
