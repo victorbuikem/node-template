@@ -14,4 +14,5 @@ module.exports = {
   INVALID_URL: 'link url must start with http:// or https://',
   INVALID_AMOUNT: 'service rate amount must be a positive integer',
   RATES_REQUIRED: 'service_rates.rates must contain at least one rate',
+  RATE_LIMITED: 'Too many creator card requests. Please try again later',
 };
