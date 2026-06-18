@@ -1,0 +1,28 @@
+services/creator-cards/create.js
+  s_cda801ec6ece14::t_dd41512c5ef619 19,34,66-69
+services/utils/serialize.js
+  s_cda801ec6ece14::t_dd41512c5ef619 28,37
+test/creator-cards/service.test.js
+  s_cda801ec6ece14::t_ea578f9d551cac 3,217-218,298-302,306,309,342-343
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.8",
+  "base_commit_sha": "5e7e2f1dff0240375c99ebdb8342797b37662626",
+  "prompts": {},
+  "humans": {
+    "h_d51bed11443bf8": {
+      "author": "Kalu Victor <victorbuikemdev@gmail.com>"
+    }
+  },
+  "sessions": {
+    "s_cda801ec6ece14": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019edadc-98f4-70e3-bd1f-d35e7db5270a",
+        "model": "gpt-5.5"
+      },
+      "human_author": "Kalu Victor <victorbuikemdev@gmail.com>"
+    }
+  }
+}
