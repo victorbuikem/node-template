@@ -1,0 +1,14 @@
+services/creator-cards/delete.js
+  h_d51bed11443bf8 59
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.8",
+  "base_commit_sha": "a6be12924c40c41a4b5f2c468e4d2ae59d5ff4ae",
+  "prompts": {},
+  "humans": {
+    "h_d51bed11443bf8": {
+      "author": "Kalu Victor <victorbuikemdev@gmail.com>"
+    }
+  }
+}
