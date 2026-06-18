@@ -24,6 +24,8 @@ function evaluateValueWithType(value, type) {
     valueIsValidType = true;
   } else if (type === 'number' && valueType === 'number') {
     valueIsValidType = true;
+  } else if (type === 'integer' && valueType === 'number' && Number.isInteger(value)) {
+    valueIsValidType = true;
   } else if (type === 'object' && valueType === 'object' && !Array.isArray(value)) {
     valueIsValidType = true;
   } else if (type === 'array' && Array.isArray(value)) {
