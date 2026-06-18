@@ -12,7 +12,7 @@ function validateType(value, type, log) {
     result = joi.string().email().lowercase().validate(value);
   }
   if (type === 'integer' || type === 'integers') {
-    result = joi.number().validate(value, {
+    result = joi.number().integer().validate(value, {
       convert: false,
     });
   }
