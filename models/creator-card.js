@@ -33,6 +33,6 @@ const schemaConfig = {
 };
 
 const modelSchema = new ModelSchema(schemaConfig, { collection: modelName });
-modelSchema.index({ slug: 1 }, { unique: true, partialFilterExpression: { deleted: null } });
+modelSchema.index({ slug: 1 }, { unique: true });
 
 module.exports = DatabaseModel.model('CreatorCard', modelSchema);

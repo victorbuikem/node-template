@@ -1,4 +1,4 @@
-const { URL } = require('url');
+const { URL: URLParser } = require('url');
 const { ERROR_CODE } = require('@app-core/errors');
 const Messages = require('@app/messages/creator-card');
 const throwCreatorCardError = require('./throw-creator-card-error');
@@ -8,7 +8,7 @@ function ensureUrls(links) {
     let url;
 
     try {
-      url = new URL(link.url);
+      url = new URLParser(link.url);
     } catch {
       throwCreatorCardError(Messages.INVALID_URL, ERROR_CODE.VALIDATIONERR);
     }

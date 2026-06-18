@@ -35,8 +35,9 @@ async function deleteCreatorCard(serviceData) {
     throwCreatorCardError(Messages.NOT_FOUND, 'NF01');
   }
 
-  const deleted = Date.now();
-  const updated = deleted;
+  const updateValues = {
+    deleted: Date.now(),
+  };
 
   const updateResult = await creatorCardRepository.updateOne({
     query: {
@@ -44,10 +45,7 @@ async function deleteCreatorCard(serviceData) {
       creator_reference: data.creator_reference,
       deleted: null,
     },
-    updateValues: {
-      deleted,
-      updated,
-    },
+    updateValues,
   });
 
   if (updateResult.modifiedCount === 0) {
@@ -58,8 +56,12 @@ async function deleteCreatorCard(serviceData) {
     typeof card.toObject === 'function'
       ? card.toObject({ flattenMaps: true, versionKey: false })
       : card;
+  const updated = updateValues.updated || updateValues.deleted;
 
-  return serializeCreatorCard({ ...deletedCard, deleted, updated }, { includeAccessCode: false });
+  return serializeCreatorCard(
+    { ...deletedCard, deleted: updateValues.deleted, updated },
+    { includeAccessCode: true }
+  );
 }
 
 module.exports = deleteCreatorCard;
