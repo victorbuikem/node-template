@@ -1,0 +1,33 @@
+models/creator-card.js
+  s_42a91fd8f5a103::t_caf4293009b893 3,6-12,16-17,21,24-26,31-32
+  s_652426e0fb10b5::t_f0c27c5ee77e3a 36
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.8",
+  "base_commit_sha": "d3e7d13c3b94a1eab49ffce92a107471c567bb9f",
+  "prompts": {},
+  "humans": {
+    "h_d51bed11443bf8": {
+      "author": "Kalu Victor <victorbuikemdev@gmail.com>"
+    }
+  },
+  "sessions": {
+    "s_42a91fd8f5a103": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019eda6c-00f1-7923-93a1-a4650b78c750",
+        "model": "gpt-5.5"
+      },
+      "human_author": "Kalu Victor <victorbuikemdev@gmail.com>"
+    },
+    "s_652426e0fb10b5": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019ed9a4-4713-7c30-9949-b6334ccf921f",
+        "model": "gpt-5.5"
+      },
+      "human_author": "Kalu Victor <victorbuikemdev@gmail.com>"
+    }
+  }
+}
