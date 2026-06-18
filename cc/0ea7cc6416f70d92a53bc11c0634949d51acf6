@@ -1,0 +1,72 @@
+services/creator-cards/create.js
+  s_a71c4c40dff50c::t_25ed071643b1a7 13,26
+  s_a71c4c40dff50c::t_1b961bc32e2f3e 14
+  s_a71c4c40dff50c::t_1c61cfed07a66e 38-42
+  h_d51bed11443bf8 6-7,10-11,23-25,27-28,43,46
+  s_a71c4c40dff50c::t_e0ce4984607b9d 12
+  s_b64290a018b875::t_0c452caeb5cf28 3,52,64
+services/utils/throw-creator-card-error.js
+  s_a71c4c40dff50c::t_1b961bc32e2f3e 1-7
+services/utils/ensure-slug-format.js
+  h_d51bed11443bf8 1-13
+services/utils/serialize.js
+  s_d24c0e82e0ac2a::t_cddc4ea86ca9f6 1-43
+endpoints/creator-cards/delete.js
+  s_42a91fd8f5a103::t_e8e548f06aa640 2,9
+endpoints/creator-cards/retrieve.js
+  s_42a91fd8f5a103::t_e8e548f06aa640 2,9
+services/utils/create-available-slug.js
+  h_d51bed11443bf8 1-30
+services/utils/ensure-urls.js
+  h_d51bed11443bf8 2-7,15-22
+  s_d24c0e82e0ac2a::t_2dcfc2f935859d 1,8-14
+services/utils/find-active-card-by-slug.js
+  h_d51bed11443bf8 1-12
+services/utils/ensure-access-code-format.js
+  h_d51bed11443bf8 1-13
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.8",
+  "base_commit_sha": "cc0ea7cc6416f70d92a53bc11c0634949d51acf6",
+  "prompts": {},
+  "humans": {
+    "h_d51bed11443bf8": {
+      "author": "Kalu Victor <victorbuikemdev@gmail.com>"
+    }
+  },
+  "sessions": {
+    "s_42a91fd8f5a103": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019eda6c-00f1-7923-93a1-a4650b78c750",
+        "model": "gpt-5.5"
+      },
+      "human_author": "Kalu Victor <victorbuikemdev@gmail.com>"
+    },
+    "s_a71c4c40dff50c": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019eda1f-acf6-7011-976a-f4fc8e899ae3",
+        "model": "gpt-5.5"
+      },
+      "human_author": "Kalu Victor <victorbuikemdev@gmail.com>"
+    },
+    "s_b64290a018b875": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019ed9fc-8fb3-7a62-9ead-5ac73384224f",
+        "model": "gpt-5.5"
+      },
+      "human_author": "Kalu Victor <victorbuikemdev@gmail.com>"
+    },
+    "s_d24c0e82e0ac2a": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019edaa1-fcca-7751-88b1-7f60a479ff9b",
+        "model": "gpt-5.5"
+      },
+      "human_author": "Kalu Victor <victorbuikemdev@gmail.com>"
+    }
+  }
+}
