@@ -1,0 +1,55 @@
+services/creator-cards/retrieve.js
+  s_652426e0fb10b5::t_ce584ea0d2a254 13-14
+  s_a71c4c40dff50c::t_990265fbed683d 1,6,11-12
+  s_a71c4c40dff50c::t_25ed071643b1a7 5
+  s_a71c4c40dff50c::t_1b961bc32e2f3e 8
+  s_b64290a018b875::t_d1bfdd93ea2af1 2,29
+  h_d51bed11443bf8 4,7,15
+services/creator-cards/validation-spec.js
+  s_a71c4c40dff50c::t_990265fbed683d 30-34,38
+  s_a71c4c40dff50c::t_6ca2ccb529bdd3 26
+services/creator-cards/delete.js
+  h_d51bed11443bf8 5,7,10,12-13,21
+  s_652426e0fb10b5::t_aae5d5a02afdb5 53
+  s_a71c4c40dff50c::t_1c61cfed07a66e 22
+  s_a71c4c40dff50c::t_6ca2ccb529bdd3 23-24,28,43
+  s_a71c4c40dff50c::t_1b961bc32e2f3e 8,54
+  s_652426e0fb10b5::t_034a506f6a2d39 41,55-56,62
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.8",
+  "base_commit_sha": "08149d003f8ca6bda814359b0e7f13312c9a3b63",
+  "prompts": {},
+  "humans": {
+    "h_d51bed11443bf8": {
+      "author": "Kalu Victor <victorbuikemdev@gmail.com>"
+    }
+  },
+  "sessions": {
+    "s_652426e0fb10b5": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019ed9a4-4713-7c30-9949-b6334ccf921f",
+        "model": "gpt-5.5"
+      },
+      "human_author": "Kalu Victor <victorbuikemdev@gmail.com>"
+    },
+    "s_a71c4c40dff50c": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019eda1f-acf6-7011-976a-f4fc8e899ae3",
+        "model": "gpt-5.5"
+      },
+      "human_author": "Kalu Victor <victorbuikemdev@gmail.com>"
+    },
+    "s_b64290a018b875": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019ed9fc-8fb3-7a62-9ead-5ac73384224f",
+        "model": "gpt-5.5"
+      },
+      "human_author": "Kalu Victor <victorbuikemdev@gmail.com>"
+    }
+  }
+}
