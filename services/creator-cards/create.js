@@ -16,6 +16,7 @@ const throwCreatorCardError = require('../utils/throw-creator-card-error');
 async function createCreatorCard(serviceData) {
   const data = validator.validate(serviceData, creatorCardSpec);
   const accessType = data.access_type || 'public';
+  const hasAccessCode = Object.hasOwn(data, 'access_code');
 
   ensureSlugFormat(data.slug);
   ensureUrls(data.links);
@@ -30,7 +31,7 @@ async function createCreatorCard(serviceData) {
     throwCreatorCardError(Messages.PRIVATE_ACCESS_CODE_REQUIRED, 'AC01');
   }
 
-  if (accessType === 'public' && data.access_code) {
+  if (accessType === 'public' && hasAccessCode) {
     throwCreatorCardError(Messages.PUBLIC_ACCESS_CODE_NOT_ALLOWED, 'AC05');
   }
 
@@ -62,7 +63,10 @@ async function createCreatorCard(serviceData) {
     throw error;
   }
 
-  return serializeCreatorCard(card, { includeAccessCode: true });
+  return serializeCreatorCard(card, {
+    includeAccessCode: true,
+    accessCode: data.access_code || null,
+  });
 }
 
 module.exports = createCreatorCard;

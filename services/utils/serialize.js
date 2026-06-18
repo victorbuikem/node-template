@@ -25,7 +25,7 @@ function stripPrivateFields(value) {
 }
 
 function serializeCreatorCard(card, options = {}) {
-  const { includeAccessCode = false } = options;
+  const { includeAccessCode = false, accessCode: responseAccessCode } = options;
   const { _id, __v, access_code: accessCode, ...rest } = card || {};
 
   const serialized = {
@@ -34,7 +34,7 @@ function serializeCreatorCard(card, options = {}) {
   };
 
   if (includeAccessCode && accessCode !== undefined) {
-    serialized.access_code = accessCode;
+    serialized.access_code = responseAccessCode !== undefined ? responseAccessCode : accessCode;
   }
 
   return serialized;
