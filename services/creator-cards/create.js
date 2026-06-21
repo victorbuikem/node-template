@@ -45,13 +45,13 @@ async function createCreatorCard(serviceData) {
   }
 
   let card;
-  const accessCodeHash = data.access_code ? await hash.createBHash(data.access_code) : null;
+  const accessCode = data.access_code ? data.access_code : null;
 
   try {
     card = await creatorCardRepository.create({
       ...data,
       access_type: accessType,
-      access_code: accessCodeHash,
+      access_code: accessCode,
       slug: data.slug || (await createAvailableSlug(data.title)),
       deleted: null,
     });
