@@ -1,6 +1,5 @@
 const assert = require('assert');
 const { ERROR_CODE } = require('@app-core/errors');
-const { hash } = require('@app-core/security');
 const createMockServer = require('@app-core/mock-server');
 const { MockModelStubs } = require('@app/mock-models');
 const createCreatorCard = require('@app/services/creator-cards/create');
@@ -214,8 +213,7 @@ describe('creator cards', () => {
         basePayload({ access_type: 'private', access_code: 'ABC123' })
       );
 
-      assert.notStrictEqual(createdData.access_code, 'ABC123');
-      assert.strictEqual(await hash.validateBHash('ABC123', createdData.access_code), true);
+      assert.strictEqual(createdData.access_code, 'ABC123');
       assert.strictEqual(response.access_code, 'ABC123');
     } finally {
       revertFind();
@@ -303,10 +301,9 @@ describe('creator cards', () => {
   });
 
   it('does not expose access_code when retrieving a card', async () => {
-    const accessCodeHash = await hash.createBHash('ABC123');
     const revertFind = stub('findOne', {
       docConfig: card({
-        access_code: accessCodeHash,
+        access_code: 'ABC123',
         links: [{ _id: 'link-01', title: 'Website', url: 'https://example.com' }],
         service_rates: {
           currency: 'USD',
@@ -339,8 +336,7 @@ describe('creator cards', () => {
   });
 
   it('rejects invalid private access_code when retrieving a card', async () => {
-    const accessCodeHash = await hash.createBHash('ABC123');
-    const revertFind = stub('findOne', { docConfig: card({ access_code: accessCodeHash }) });
+    const revertFind = stub('findOne', { docConfig: card({ access_code: 'ABC123' }) });
 
     try {
       await assertRejects(

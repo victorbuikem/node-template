@@ -1,6 +1,5 @@
 const validator = require('@app-core/validator');
 const { ERROR_CODE } = require('@app-core/errors');
-const { hash } = require('@app-core/security');
 const creatorCardRepository = require('@app/repository/creator-card');
 const Messages = require('@app/messages/creator-card');
 const ensureSlugFormat = require('@app/services/utils/ensure-slug-format');
