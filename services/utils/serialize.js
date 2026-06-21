@@ -33,10 +33,6 @@ function serializeCreatorCard(card, options = {}) {
     ...stripPrivateFields(rest),
   };
 
-  if (includeAccessCode && accessCode !== undefined) {
-    serialized.access_code = responseAccessCode !== undefined ? responseAccessCode : accessCode;
-  }
-
   return serialized;
 }
 
