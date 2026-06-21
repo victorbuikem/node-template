@@ -65,7 +65,6 @@ async function createCreatorCard(serviceData) {
 
   return serializeCreatorCard(card, {
     includeAccessCode: true,
-    accessCode: data.access_code || null,
   });
 }
 
